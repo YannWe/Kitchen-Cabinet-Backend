@@ -13,6 +13,5 @@ const CabinetItemSchema = mongoose.Schema({
     },
 });
 
-const CabinetItem = mongoose.model("CabinetItem", CabinetItemSchema);
+export default mongoose.model("CabinetItem", CabinetItemSchema);
 
-export default CabinetItem;

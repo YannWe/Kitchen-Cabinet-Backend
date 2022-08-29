@@ -7,7 +7,7 @@ Req's:
 4. Project specific MongoDB 
 
 
-### Ingredient Schema
+### Ingredient (Item) Schema
 
 cabinetId
 name
@@ -22,8 +22,8 @@ createdAt
 _id
 
 ### CRUD
-1. POST Ingredient
-2. GET All Ingredients
-3. PUT Ingredient
-4. DELETE Ingredient
-
+1. POST Item
+2. GET All Item
+3. GET specific Item
+4. PUT Item
+5. DELETE Item

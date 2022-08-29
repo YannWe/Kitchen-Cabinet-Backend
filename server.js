@@ -3,8 +3,11 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 
-// custom module importing
+// helpers
+import { connectDB } from "./helpers/dbConnect";
 
+// custom module importing
+import cabinetItemRouter from "./routes/cabinetItemsRouter.js"
 
 const server = express();
 
@@ -15,10 +18,10 @@ server.use(cors());
 server.use(express.json());
 
 // using route for Cabinet items
-server.use("/cabinet", cabinetRouter)
+server.use("/cabinet", cabinetItemRouter);
 
+//Connect to DB
 connectDB();
-
 
 mongoose.connection.on("open", () => {
     console.log("Connected to DB")
@@ -28,6 +31,6 @@ mongoose.connection.on("error", (error) => {
 });
 
 
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT || 8002
 server.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
 

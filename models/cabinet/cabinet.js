@@ -10,6 +10,4 @@ const CabinetSchema = mongoose.Schema({
     },
 });
 
-const Cabinet = mongoose.model("CabinetItem", CabinetSchema);
-
-export default Cabinet;
+export default mongoose.model("Cabinet", CabinetSchema);
