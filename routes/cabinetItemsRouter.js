@@ -1,6 +1,6 @@
 import express from "express";
 //import controllers
-import { getAllItems, getItem, addItem, editItem, deleteItem } from "../controllers/cabinet/cabinetItemsController";
+import { getAllItems, getItem, addItem, editItem, deleteItem } from "../controllers/cabinet/cabinetItemsController.js";
 
 // define router
 const router = express.Router()

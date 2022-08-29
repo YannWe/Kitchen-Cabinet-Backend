@@ -24,5 +24,6 @@
   "homepage": "https://github.com/YannWe/Kitchen-Cabinet-Backend#readme",
   "devDependencies": {
     "nodemon": "^2.0.19"
-  }
+  },
+  "type": "module"
 }

@@ -4,7 +4,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 
 // helpers
-import { connectDB } from "./helpers/dbConnect";
+import { connectDB } from "./helpers/dbConnect.js";
 
 // custom module importing
 import cabinetItemRouter from "./routes/cabinetItemsRouter.js"
