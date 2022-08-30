@@ -1,12 +1,14 @@
 import mongoose from "mongoose";
+import Cabinet from "../../models/cabinet/cabinet.js";
 // import Cabinet item model
 import CabinetItem from "../../models/cabinet/cabinetItems.js";
 
 
 //getAllItems from Cabinet
 export const getAllItems = async (req, res) => {
+    const { id: cabinetId } = req.params;
     try {
-        const allItems = await CabinetItem.find()
+        const allItems = await CabinetItem.find({ cabinetId: cabinetId });
         // console.log(allItems)
         res.status(200).json(allItems);
     } catch (error) {
@@ -27,14 +29,18 @@ export const getItem = async (req, res) => {
 
 // add Item to Cabinet
 export const addItem = async (req, res) => {
-    const { name, expiryDate, amount } = req.body;
+    const { cabinetId, name, expiryDate, amount } = req.body;
     try {
         const newItem = await CabinetItem.create({
+            cabinetId,
             name,
             expiryDate,
             amount,
         })
-        res.status(201).json(newItem)
+        const selectedCabinet = await Cabinet.findOne({ _id: cabinetId })
+        selectedCabinet.items.push(newItem._id)
+        console.log(selectedCabinet)
+        res.status(201).json(selectedCabinet)
     } catch (error) {
         res.status(404).json({ message: error.message })
     };

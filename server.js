@@ -19,7 +19,7 @@ server.use(cors());
 server.use(express.json());
 
 // using route for Cabinet items
-server.use("/cabinet", cabinetItemRouter);
+server.use("/cabinet/items", cabinetItemRouter);
 //using route for Cabinet
 server.use("/cabinet", cabinetRouter)
 

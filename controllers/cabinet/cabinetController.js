@@ -27,7 +27,7 @@ export const getCabinet = async (req, res) => {
 
 // create Cabinet
 export const createCabinet = async (req, res) => {
-    const { name, expiryDate, amount } = req.body;
+    const { name } = req.body;
     try {
         const newCabinet = await Cabinet.create({
             name

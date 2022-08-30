@@ -7,7 +7,7 @@ const router = express.Router()
 
 // CRUD
 // get all items
-router.get("/getall", getAllItems);
+router.get("/getall/:id", getAllItems);
 // get specific item
 router.get("/getitem/:id", getItem);
 // post new item

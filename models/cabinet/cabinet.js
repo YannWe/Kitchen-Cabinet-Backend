@@ -8,6 +8,7 @@ const CabinetSchema = mongoose.Schema({
         type: Date,
         default: new Date()
     },
+    items: [{ type: mongoose.Schema.Types.ObjectId, ref: 'CabinetItem' }]
 });
 
 export default mongoose.model("Cabinet", CabinetSchema);

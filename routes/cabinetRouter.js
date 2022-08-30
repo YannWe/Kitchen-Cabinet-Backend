@@ -6,15 +6,15 @@ import { getAllCabinets, getCabinet, createCabinet, editCabinet, deleteCabinet }
 const router = express.Router()
 
 // CRUD
-// get all items
+// get all cabinets
 router.get("/getall", getAllCabinets);
-// get specific item
+// get specific cabinet
 router.get("/getcabinet/:id", getCabinet);
-// post new item
+// post new cabinet
 router.post("/addcabinet", createCabinet);
-// edit existing item
+// edit existing cabinet
 router.put("/editcabinet/:id", editCabinet);
-// delete specific item
+// delete specific cabinet
 router.delete("/deletecabinet/:id", deleteCabinet);
 
 export default router;

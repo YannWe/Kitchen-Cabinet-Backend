@@ -27,3 +27,10 @@ _id
 3. GET specific Item
 4. PUT Item
 5. DELETE Item
+
+
+PRocess:
+
+1. POST new Cabinet A
+2. POST new item A for Cabinet A
+3. PUT new item
