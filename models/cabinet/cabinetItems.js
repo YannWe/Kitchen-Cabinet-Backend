@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 // Cabinet Item Schema
 
 const CabinetItemSchema = mongoose.Schema({
-    cabinetId: Number, // get CabinetId
+    cabinetId: Number, // get CabinetId 
     name: String,
-    expiryDate: String,
+    expiryDate: Date,
     amount: Number, // what about weight, volume, simple numbers (e.g.: 100ml milk, 50 grams sugar, 5 bananas)
     createdAt: {
         type: Date,
@@ -14,4 +14,3 @@ const CabinetItemSchema = mongoose.Schema({
 });
 
 export default mongoose.model("CabinetItem", CabinetItemSchema);
-

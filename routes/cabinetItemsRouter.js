@@ -9,13 +9,13 @@ const router = express.Router()
 // get all items
 router.get("/getall", getAllItems);
 // get specific item
-router.get("getitem", getItem);
+router.get("/getitem/:id", getItem);
 // post new item
-router.post("additem", addItem);
+router.post("/additem", addItem);
 // edit existing item
-router.put("edititem", editItem);
+router.put("/edititem/:id", editItem);
 // delete specific item
-router.delete("deleteitem", deleteItem);
+router.delete("/deleteitem/:id", deleteItem);
 
 export default router;
 

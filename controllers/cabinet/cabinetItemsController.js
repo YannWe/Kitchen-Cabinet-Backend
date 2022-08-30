@@ -7,7 +7,7 @@ import CabinetItem from "../../models/cabinet/cabinetItems.js";
 export const getAllItems = async (req, res) => {
     try {
         const allItems = await CabinetItem.find()
-        console.log(allItems)
+        // console.log(allItems)
         res.status(200).json(allItems);
     } catch (error) {
         res.status(404).json({ message: error.message })
@@ -46,8 +46,8 @@ export const editItem = async (req, res) => {
     const item = req.body;
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("no item with that id")
     try {
-        const item = await CabinetItem.findById(_id);
-        const updatedItem = await item.findByIdAndUpdate(_id, post, { new: true });
+        const updatedItem = await CabinetItem.findByIdAndUpdate(_id, item, { new: true });
+        console.log(updatedItem)
         res.status(204).json(updatedItem);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -59,8 +59,8 @@ export const deleteItem = async (req, res) => {
     const { id: _id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No item with that id")
     try {
-        await CabinetItem.findByIdAndRemove(_id);
-        res.status(200).json({ message: "Item has been removed" });
+        const deletedItem = await CabinetItem.findByIdAndRemove(_id);
+        res.status(200).json({ message: `${deletedItem.name} has been removed` });
     } catch (error) {
         res.status(400).json({ message: error.message });
     };

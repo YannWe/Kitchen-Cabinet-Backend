@@ -8,6 +8,7 @@ import { connectDB } from "./helpers/dbConnect.js";
 
 // custom module importing
 import cabinetItemRouter from "./routes/cabinetItemsRouter.js"
+import cabinetRouter from "./routes/cabinetRouter.js"
 
 const server = express();
 
@@ -19,6 +20,8 @@ server.use(express.json());
 
 // using route for Cabinet items
 server.use("/cabinet", cabinetItemRouter);
+//using route for Cabinet
+server.use("/cabinet", cabinetRouter)
 
 //Connect to DB
 connectDB();
