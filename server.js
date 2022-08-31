@@ -9,6 +9,7 @@ import { connectDB } from "./helpers/dbConnect.js";
 // custom module importing
 import cabinetItemRouter from "./routes/cabinetItemsRouter.js"
 import cabinetRouter from "./routes/cabinetRouter.js"
+import recipesRouter from "./routes/recipesRouter.js";
 
 const server = express();
 
@@ -22,6 +23,8 @@ server.use(express.json());
 server.use("/cabinet/items", cabinetItemRouter);
 //using route for Cabinet
 server.use("/cabinet", cabinetRouter)
+//using route for Recipes (Spoonacular API)
+server.use("/recipes", recipesRouter);
 
 //Connect to DB
 connectDB();
