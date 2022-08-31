@@ -15,7 +15,7 @@ const router = express.Router();
 router.get("/filter", getFilteredRecipes);
 // GET by id
 router.get("/id/:id", getRecipeById);
-// GET by ingredients lax default (exact=true) as query
+// GET by ingredients (TODO: lax default (exact=true) as query)
 router.get("/byIngredients", getRecipeByIngredients);
 // GET available ingredients names
 router.get("/ingredients", getIngredients);
