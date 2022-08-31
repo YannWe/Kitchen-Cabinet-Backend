@@ -1,10 +1,8 @@
-import mongoose from "mongoose";
 import axios from "axios";
 import "dotenv/config";
 const API_KEY = process.env.API_KEY;
 
 // GET /recipes/filter?query=tomato&type=breakfast&intolerances=dairy&diet=lacto-vegetarian
-
 export const getFilteredRecipes = async (req, res) => {
   const { query, type, diet, cuisine, intolerances } = req.query;
 
@@ -26,7 +24,6 @@ export const getFilteredRecipes = async (req, res) => {
 };
 
 // GET /recipes/id/659604
-
 export const getRecipeById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -45,7 +42,6 @@ export const getRecipeById = async (req, res) => {
 };
 
 // GET /recipes/byIngredients?ingredients=milk,sugar
-
 export const getRecipeByIngredients = async (req, res) => {
   const { ingredients } = req.query;
   try {
@@ -66,7 +62,6 @@ export const getRecipeByIngredients = async (req, res) => {
 };
 
 // GET /recipes/ingredients?ingredients=apple
-
 export const getIngredients = async (req, res) => {
   const { ingredients } = req.query;
   try {
@@ -91,7 +86,6 @@ export const getIngredients = async (req, res) => {
 };
 
 // GET /recipes/instructions/659604
-
 export const getRecipeInstructions = async (req, res) => {
   const { id } = req.params;
   try {
