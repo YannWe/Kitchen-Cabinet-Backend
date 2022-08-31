@@ -7,14 +7,14 @@ const router = express.Router()
 
 // CRUD
 // get all cabinets
-router.get("/getall", getAllCabinets);
+router.get("/", getAllCabinets);
 // get specific cabinet
-router.get("/getcabinet/:id", getCabinet);
+router.get("/:id", getCabinet);
 // post new cabinet
-router.post("/addcabinet", createCabinet);
+router.post("/", createCabinet);
 // edit existing cabinet
-router.put("/editcabinet/:id", editCabinet);
+router.put("/:id", editCabinet);
 // delete specific cabinet
-router.delete("/deletecabinet/:id", deleteCabinet);
+router.delete("/:id", deleteCabinet);
 
 export default router;

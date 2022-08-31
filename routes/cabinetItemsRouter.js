@@ -7,15 +7,15 @@ const router = express.Router()
 
 // CRUD
 // get all items
-router.get("/getall/:id", getAllItems);
+router.get("/item/:id", getAllItems);
 // get specific item
-router.get("/getitem/:id", getItem);
+router.get("/:id", getItem);
 // post new item
-router.post("/additem", addItem);
+router.post("/", addItem);
 // edit existing item
-router.put("/edititem/:id", editItem);
+router.put("/:id", editItem);
 // delete specific item
-router.delete("/deleteitem/:id", deleteItem);
+router.delete("/:id", deleteItem);
 
 export default router;
 
