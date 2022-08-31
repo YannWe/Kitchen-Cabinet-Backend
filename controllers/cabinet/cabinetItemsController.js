@@ -42,7 +42,7 @@ export const addItem = async (req, res) => {
         console.log(selectedCabinet)
         res.status(201).json(selectedCabinet)
     } catch (error) {
-        res.status(404).json({ message: error.message })
+        res.status(404).json({ message: error.message });
     };
 };
 
