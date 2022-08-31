@@ -10,6 +10,7 @@ import { connectDB } from "./helpers/dbConnect.js";
 import cabinetItemRouter from "./routes/cabinetItemsRouter.js"
 import cabinetRouter from "./routes/cabinetRouter.js"
 import recipesRouter from "./routes/recipesRouter.js";
+import requestLogger from "./middlewares/requestLogger.js";
 
 const server = express();
 
@@ -19,6 +20,7 @@ dotenv.config();
 server.use(cors());
 server.use(express.json());
 
+server.use(requestLogger);
 // using route for Cabinet items
 server.use("/cabinet/items", cabinetItemRouter);
 //using route for Cabinet
