@@ -4,11 +4,10 @@ import mongoose from "mongoose";
 
 const CabinetSchema = mongoose.Schema({
     name: String,
-    createdAt: {
-        type: Date,
-        default: new Date()
-    },
     items: [{ type: mongoose.Schema.Types.ObjectId, ref: 'CabinetItem' }]
+    
+}, {
+    timestamps: true
 });
 
 export default mongoose.model("Cabinet", CabinetSchema);
