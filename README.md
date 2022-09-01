@@ -24,19 +24,15 @@ name
 createdAt
 \_id
 
-### CRUD
-
+### CRUD Ingredients (Items)
 1. POST Item
+    /cabinet/items/
 2. GET All Item
+    /cabinet/items/item/630dff86aa1ea3a726d5c230
 3. GET specific Item
+    
 4. PUT Item
 5. DELETE Item
-
-Process:
-
-1. POST new Cabinet A
-2. POST new item A for Cabinet A
-3. PUT new item
 
 ### Connect to Spoonacular
 

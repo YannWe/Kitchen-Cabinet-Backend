@@ -2,8 +2,6 @@ import mongoose from "mongoose";
 import Cabinet from "../../models/cabinet/cabinet.js";
 // import Cabinet item model
 import CabinetItem from "../../models/cabinet/cabinetItems.js";
-
-// add validations where required
 // update README with examples
 
 //getAllItems from Cabinet
@@ -12,7 +10,6 @@ export const getAllItems = async (req, res) => {
     const { id: cabinetId } = req.params;
     try {
         const allItems = await CabinetItem.find({ cabinetId: cabinetId });
-        // console.log(allItems)
         res.status(200).json(allItems);
     } catch (error) {
         res.status(404).json({ message: error.message })
@@ -58,7 +55,7 @@ export const editItem = async (req, res) => {
     const item = req.body;
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("no item with that id")
     try {
-        const updatedItem = await CabinetItem.findByIdAndUpdate(_id, item, { new: true });
+        const updatedItem = await CabinetItem.findByIdAndUpdate(_id, item, { new: true, runValidator: true });
         console.log(updatedItem)
         res.status(204).json(updatedItem);
     } catch (error) {
@@ -73,12 +70,10 @@ export const deleteItem = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No item with that id")
     try {
         // delete item 
-        // const itemToDelete = await CabinetItem.findById(_id)
-        const deletedItem = await CabinetItem.findByIdAndRemove(_id);
-        
+        const deletedItem = await CabinetItem.findByIdAndRemove(_id, { new: true, runValidator: true });
         // remove reference to item from parent Cabinet 
-        const selectedCabinet = await Cabinet.findOneAndUpdate({ _id: deletedItem.cabinetId }, {$pull: {items: {$in: [deletedItem._id]}}})
-        res.status(201).json(selectedCabinet)
+        const selectedCabinet = await Cabinet.findOneAndUpdate({ _id: deletedItem.cabinetId }, { $pull: { items: { $in: [deletedItem._id] } } }, { new: true, runValidator: true });
+        res.status(201).json(selectedCabinet);
         // res.status(201).json({ message: `${deletedItem.name} has been removed` }, selectedCabinet);
     } catch (error) {
         res.status(400).json({ message: error.message });
