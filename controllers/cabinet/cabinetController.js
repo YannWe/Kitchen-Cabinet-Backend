@@ -2,8 +2,10 @@ import mongoose from "mongoose";
 // import Cabinet item model
 import Cabinet from "../../models/cabinet/cabinet.js";
 
+// add validations where required
 
 //getAllCabinets
+// GET /cabinet/
 export const getAllCabinets = async (req, res) => {
     try {
         const allCabinets= await Cabinet.find()
@@ -15,6 +17,7 @@ export const getAllCabinets = async (req, res) => {
 };
 
 // get specific Cabinet
+// GET /cabinet/:id
 export const getCabinet = async (req, res) => {
     const { id: _id } = req.params;
     try {
@@ -26,6 +29,7 @@ export const getCabinet = async (req, res) => {
 };
 
 // create Cabinet
+// POST /cabinet/
 export const createCabinet = async (req, res) => {
     const { name } = req.body;
     try {
@@ -39,6 +43,7 @@ export const createCabinet = async (req, res) => {
 };
 
 // Edit Cabinet
+// PUT /cabinet/:id
 export const editCabinet = async (req, res) => {
     const { id: _id } = req.params;
     const cabinet = req.body;
@@ -53,6 +58,7 @@ export const editCabinet = async (req, res) => {
 };
 
 // delete Cabinet
+// DELETE /cabinet/:id
 export const deleteCabinet = async (req, res) => {
     const { id: _id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No cabinet with that id")

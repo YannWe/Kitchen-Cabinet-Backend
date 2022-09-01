@@ -20,6 +20,7 @@ dotenv.config();
 server.use(cors());
 server.use(express.json());
 
+// logging
 server.use(requestLogger);
 // using route for Cabinet items
 server.use("/cabinet/items", cabinetItemRouter);

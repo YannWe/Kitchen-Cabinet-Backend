@@ -3,8 +3,11 @@ import Cabinet from "../../models/cabinet/cabinet.js";
 // import Cabinet item model
 import CabinetItem from "../../models/cabinet/cabinetItems.js";
 
+// add validations where required
+// update README with examples
 
 //getAllItems from Cabinet
+// GET /cabinet/items/item/:id
 export const getAllItems = async (req, res) => {
     const { id: cabinetId } = req.params;
     try {
@@ -16,7 +19,8 @@ export const getAllItems = async (req, res) => {
     };
 };
 
-// get specific Item from Cabinet
+// get specific Item by Id
+// GET /cabinet/items/:id
 export const getItem = async (req, res) => {
     const { id: _id } = req.params;
     try {
@@ -28,6 +32,7 @@ export const getItem = async (req, res) => {
 };
 
 // add Item to Cabinet
+// POST /cabinet/items/
 export const addItem = async (req, res) => {
     const { cabinetId, name, expiryDate, amount } = req.body;
     try {
@@ -37,7 +42,7 @@ export const addItem = async (req, res) => {
             name,
             expiryDate,
             amount,
-        })
+        });
         // linking the item to the parent Cabinet
         const selectedCabinet = await Cabinet.findByIdAndUpdate({ _id: cabinetId }, { $push: { items: newItem._id } }, { new: true, runValidator: true });
         res.status(201).json(selectedCabinet);
@@ -47,6 +52,7 @@ export const addItem = async (req, res) => {
 };
 
 // edit Item from Cabinet
+// PUT /cabinet/items/:id
 export const editItem = async (req, res) => {
     const { id: _id } = req.params;
     const item = req.body;
@@ -61,6 +67,7 @@ export const editItem = async (req, res) => {
 };
 
 // delete Item from Cabinet
+// DELETE /cabinet/items/:id
 export const deleteItem = async (req, res) => {
     const { id: _id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No item with that id")
