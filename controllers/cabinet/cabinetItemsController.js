@@ -5,7 +5,7 @@ import Cabinet from "../../models/cabinet/cabinet.js";
 import CabinetItem from "../../models/cabinet/cabinetItems.js";
 
 //getAllItems from Cabinet
-// GET /cabinet/items/item/:id
+// GET /cabinet/items/all/:id
 export const getAllItems = async (req, res) => {
     const { id: cabinetId } = req.params;
     try {
