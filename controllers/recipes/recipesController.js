@@ -61,26 +61,51 @@ export const getRecipeByIngredients = async (req, res) => {
   }
 };
 
-// GET /recipes/ingredients?ingredients=apple
+// GET /recipes/ingredient?ingredient=apple
+
 export const getIngredients = async (req, res) => {
-  const { ingredients } = req.query;
+  const { ingredient } = req.query;
+
   try {
     const { data } = await axios.get(
-      `https://api.spoonacular.com/food/ingredients/search?query=${ingredients}&number=100&apiKey=${API_KEY}`
+      `https://api.spoonacular.com/food/ingredients/search?query=${ingredient}&number=100&apiKey=${API_KEY}`
     );
     if (!data)
       return res
         .status(400)
         .json({ message: "error while fetching ingredients" });
 
-    const sortedIngredients = data.results
-      .map((item) => item.name)
-      .filter((name) => name.includes(ingredients))
+    const items = data.results
+      .map((item) => ({
+        name: item.name,
+        id: item.id,
+      }))
+      .filter((item) => item.name.includes(ingredient))
       .sort();
 
-    res.status(200).json(sortedIngredients);
+    res.status(200).json(items);
   } catch (error) {
     console.log(error);
+    res.status(400).json({ message: "error while fetching ingredients" });
+  }
+};
+
+
+// GET /recipes/ingredientType/11529
+export const getIngredientType = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const { data } = await axios.get(
+      `https://api.spoonacular.com/food/ingredients/${id}/information?amount=1&apiKey=${API_KEY}`
+    );
+    if (!data)
+      return res
+        .status(400)
+        .json({ message: "error while fetching ingredients" });
+
+    res.status(200).json(data.categoryPath);
+  } catch (error) {
     res.status(400).json({ message: "error while fetching ingredients" });
   }
 };
