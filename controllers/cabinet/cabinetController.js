@@ -6,7 +6,7 @@ import Cabinet from "../../models/cabinet/cabinet.js";
 // GET /cabinet/
 export const getAllCabinets = async (req, res) => {
     try {
-        const allCabinets= await Cabinet.find()
+        const allCabinets = await Cabinet.find()
         // console.log(allItems)
         res.status(200).json(allCabinets);
     } catch (error) {
