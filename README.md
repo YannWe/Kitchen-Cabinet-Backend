@@ -40,7 +40,7 @@ Process:
 
 ### Connect to Spoonacular
 
-## Endpoints for get requests
+### Endpoints for get requests
 
 1. get filtered recipes\
    GET /recipes/filter?query=tomato&type=breakfast&intolerances=dairy&diet=lacto-vegetarian
