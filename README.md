@@ -42,13 +42,15 @@ Process:
 
 ## Endpoints for get requests
 
-1. get filtered recipes
+1. get filtered recipes\
    GET /recipes/filter?query=tomato&type=breakfast&intolerances=dairy&diet=lacto-vegetarian
-2. get recipes by id
+2. get recipes by id\
    GET /recipes/id/659604
-3. get recipes by ingredients
+3. get recipes by ingredients\
    GET /recipes/byIngredients?ingredients=milk,sugar
-4. get available ingredients names
-   GET /recipes/ingredients?ingredients=apple
-5. get instructions for specific recipe
+4. get available ingredients names and ids\
+   GET /recipes/ingredient?ingredient=apple
+5. get instructions for specific recipe\
    GET /recipes/instructions/659604
+6. get ingredientType by ingredientId\
+   GET /recipes/ingredientType/11529
