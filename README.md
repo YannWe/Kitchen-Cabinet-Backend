@@ -28,11 +28,25 @@ createdAt
 1. POST Item
     /cabinet/items/
 2. GET All Item
-    /cabinet/items/item/630dff86aa1ea3a726d5c230
+    /cabinet/items/all/630dff86aa1ea3a726d5c230
 3. GET specific Item
-    
+    /cabinet/items/630dffc8aa1ea3a726d5c232
 4. PUT Item
+    /cabinet/items/630dffc8aa1ea3a726d5c232
 5. DELETE Item
+    /cabinet/items/630dffc8aa1ea3a726d5c232
+
+### CRUD Cabinets
+1. POST Cabinet
+    /cabinet/
+2. GET All Cabinets
+    /cabinet/
+3. GET specific Cabinet
+    /cabinet/630dff86aa1ea3a726d5c230
+4. PUT Cabinet
+    /cabinet/630dff86aa1ea3a726d5c230
+5. DELETE Cabinet
+    /cabinet/630dff86aa1ea3a726d5c230
 
 ### Connect to Spoonacular
 
