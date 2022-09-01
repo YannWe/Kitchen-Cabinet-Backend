@@ -93,8 +93,26 @@ export const getIngredients = async (req, res) => {
   }
 };
 
-// GET /recipes/instructions/659604
+// GET /recipes/ingredientType/11529
+export const getIngredientType = async (req, res) => {
+  const { id } = req.params;
 
+  try {
+    const { data } = await axios.get(
+      `https://api.spoonacular.com/food/ingredients/${id}/information?amount=1&apiKey=${API_KEY}`
+    );
+    if (!data)
+      return res
+        .status(400)
+        .json({ message: "error while fetching ingredients" });
+
+    res.status(200).json(data.categoryPath);
+  } catch (error) {
+    res.status(400).json({ message: "error while fetching ingredients" });
+  }
+};
+
+// GET /recipes/instructions/659604
 export const getRecipeInstructions = async (req, res) => {
   const { id } = req.params;
   try {

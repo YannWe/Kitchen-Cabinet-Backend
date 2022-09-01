@@ -6,6 +6,7 @@ import {
   getRecipeById,
   getRecipeByIngredients,
   getRecipeInstructions,
+  getIngredientType,
 } from "../controllers/recipes/recipesController.js";
 
 // define router
@@ -17,8 +18,10 @@ router.get("/filter", getFilteredRecipes);
 router.get("/id/:id", getRecipeById);
 // GET by ingredients (TODO: lax default (exact=true) as query)
 router.get("/byIngredients", getRecipeByIngredients);
-// GET available ingredients names
-router.get("/ingredients", getIngredients);
+// GET available ingredient names and ids
+router.get("/ingredient", getIngredients);
+// GET ingredient type
+router.get("/ingredientType/:id", getIngredientType);
 // GET instructions for specific recipe
 router.get("/instructions/:id", getRecipeInstructions);
 
