@@ -5,7 +5,7 @@ import Cabinet from "../../models/cabinet/cabinet.js";
 import CabinetItem from "../../models/cabinet/cabinetItems.js";
 
 //getAllItems from Cabinet
-// GET /cabinet/items/item/:id
+// GET /cabinet/items/all/:id
 export const getAllItems = async (req, res) => {
     const { id: cabinetId } = req.params;
     try {
@@ -31,33 +31,33 @@ export const getItem = async (req, res) => {
 // add Item to Cabinet
 // POST cabinet/items/
 export const addItem = async (req, res) => {
-  const { cabinetId, id, expiryDate, amount } = req.body;
-  try {
-    // getType from spoonacular
-    //
-    const { data } = await axios.get(
-      `http://localhost:8002/recipes/ingredientType/${id}`
-    );
-    const { type, name } = data;
-    // creating the new item
-    const newItem = await CabinetItem.create({
-      cabinetId,
-      name,
-      expiryDate,
-      amount,
-      spoonId: id,
-      type: type[0],
-    });
-    // linking the item to the parent Cabinet
-    const selectedCabinet = await Cabinet.findByIdAndUpdate(
-      { _id: cabinetId },
-      { $push: { items: newItem._id } },
-      { new: true, runValidator: true }
-    );
-    res.status(201).json(selectedCabinet);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
+    const { cabinetId, id, expiryDate, amount } = req.body;
+    try {
+        // getType from spoonacular
+        //
+        const { data } = await axios.get(
+            `http://localhost:8002/recipes/ingredientType/${id}`
+        );
+        const { type, name } = data;
+        // creating the new item
+        const newItem = await CabinetItem.create({
+            cabinetId,
+            name,
+            expiryDate,
+            amount,
+            spoonId: id,
+            type: type[0],
+        });
+        // linking the item to the parent Cabinet
+        const selectedCabinet = await Cabinet.findByIdAndUpdate(
+            { _id: cabinetId },
+            { $push: { items: newItem._id } },
+            { new: true, runValidator: true }
+        );
+        res.status(201).json(selectedCabinet);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
 };
 
 // edit Item from Cabinet
