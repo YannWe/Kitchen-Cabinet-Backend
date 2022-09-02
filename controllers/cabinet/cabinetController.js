@@ -20,7 +20,7 @@ export const getCabinet = async (req, res) => {
     const { id: _id } = req.params;
     try {
         const cabinet = await Cabinet.findById(_id);
-        res.status(200).json(cabinet.items);
+        res.status(200).json(cabinet);
     } catch (error) {
         res.status(400).json({ message: error.message })
     };
