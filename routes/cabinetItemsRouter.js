@@ -7,7 +7,7 @@ const router = express.Router()
 
 // CRUD
 // get all items
-// GET /cabinet/
+// GET /cabinet/items/all/:id
 router.get("/all/:id", getAllItems);
 // get specific item
 // GET /cabinet/items/:id
