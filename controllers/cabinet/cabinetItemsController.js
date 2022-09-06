@@ -47,8 +47,9 @@ export const addItem = async (req, res) => {
             amount,
             spoonId: id,
             type: type[0],
-            image: `https://spoonacular.com/cdn/ingredients_100x100/${image}`
+            image,
         });
+        console.log(newItem);
         // linking the item to the parent Cabinet
         const selectedCabinet = await Cabinet.findByIdAndUpdate(
             { _id: cabinetId },

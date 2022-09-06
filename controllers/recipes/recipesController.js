@@ -91,6 +91,7 @@ export const getIngredients = async (req, res) => {
   }
 };
 
+// GET ingredientType & Image
 // GET /recipes/ingredientType/11529
 export const getIngredientType = async (req, res) => {
   const { id } = req.params;
@@ -103,11 +104,11 @@ export const getIngredientType = async (req, res) => {
       return res
         .status(400)
         .json({ message: "error while fetching ingredients" });
-
     res.status(200).json({
       type: data.categoryPath.slice(-1),
       name: data.name,
       id: data.id,
+      image: data.image,
     });
   } catch (error) {
     res.status(400).json({ message: "error while fetching ingredients" });
