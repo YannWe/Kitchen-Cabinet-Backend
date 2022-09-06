@@ -38,7 +38,7 @@ export const addItem = async (req, res) => {
         const { data } = await axios.get(
             `http://localhost:8002/recipes/ingredientType/${id}`
         );
-        const { type, name } = data;
+        const { type, name, image } = data;
         // creating the new item
         const newItem = await CabinetItem.create({
             cabinetId,
@@ -47,6 +47,7 @@ export const addItem = async (req, res) => {
             amount,
             spoonId: id,
             type: type[0],
+            image: `https://spoonacular.com/cdn/ingredients_100x100/${image}`
         });
         // linking the item to the parent Cabinet
         const selectedCabinet = await Cabinet.findByIdAndUpdate(
