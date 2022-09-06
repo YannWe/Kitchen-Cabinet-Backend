@@ -79,6 +79,7 @@ export const getIngredients = async (req, res) => {
       .map((item) => ({
         name: item.name,
         id: item.id,
+        image: item.image
       }))
       .filter((item) => item.name.includes(ingredient))
       .sort();
