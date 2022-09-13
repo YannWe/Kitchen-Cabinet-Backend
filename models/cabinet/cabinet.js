@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 const CabinetSchema = mongoose.Schema({
     // add in user Id
     name: String,
+    uid: String,
     items: [{ type: mongoose.Schema.Types.ObjectId, ref: 'CabinetItem' }]
     
 }, {
