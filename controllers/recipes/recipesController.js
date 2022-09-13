@@ -23,7 +23,9 @@ export const getFilteredRecipes = async (req, res) => {
           item.extendedIngredients.map((item) => item.name !== intolerances))
       );
     });
-    res.status(200).json(filteredRecipes);
+    const filteredRecipesIds = filteredRecipes.map((item) => item.id);
+
+    res.status(200).json(filteredRecipesIds);
   } catch (error) {
     console.log(error);
     res
@@ -95,10 +97,7 @@ export const getIngredients = async (req, res) => {
 
 //GET recipes/bulk?ids=648767,716422
 export const getRecipeInformationBulk = async (req, res) => {
-  //get get filterinformation
-
   const { ids } = req.query;
-
   try {
     const { data } = await axios.get(
       `https://api.spoonacular.com/recipes/informationBulk?ids=${ids}&apiKey=${API_KEY}`
@@ -107,7 +106,6 @@ export const getRecipeInformationBulk = async (req, res) => {
       return res
         .status(400)
         .json({ message: "error while fetching ingredients" });
-    console.log("bulk", data);
     res.status(200).json(data);
   } catch (error) {
     console.log(error);
