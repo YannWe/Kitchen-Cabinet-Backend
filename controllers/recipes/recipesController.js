@@ -4,7 +4,7 @@ const API_KEY = process.env.API_KEY;
 
 // GET /recipes/filter?type=breakfast&intolerances=dairy&diet=lacto-vegetarian&ids=6543,6543,6543
 export const getFilteredRecipes = async (req, res) => {
-  const { type, diet, intolerances, ids } = req.query;
+  const { type, diet, intolerance, extras, ids } = req.query;
 
   try {
     const { data } = await axios.get(
@@ -17,12 +17,20 @@ export const getFilteredRecipes = async (req, res) => {
 
     const filteredRecipes = data.filter((item) => {
       return (
-        (!diet || item.diets.includes(diet)) &&
-        (!type || item.dishTypes.includes(type)) &&
-        (!intolerances ||
-          item.extendedIngredients.map((item) => item.name !== intolerances))
+        !diet ||
+        (item[diet] &&
+          (!type || item.dishTypes.includes(type)) &&
+          (!intolerance ||
+            item.extendedIngredients.every(
+              (item) => item.name !== intolerance
+            )) &&
+          (!extras ||
+            (extras === "readyInMinutes"
+              ? item.readyInMinutes < 30
+              : item[extras])))
       );
     });
+
     const filteredRecipesIds = filteredRecipes.map((item) => item.id);
 
     res.status(200).json(filteredRecipesIds);
