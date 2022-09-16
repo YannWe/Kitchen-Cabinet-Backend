@@ -1,9 +1,16 @@
 import express from "express";
 //import controllers
-import { getAllCabinets, getCabinet, createCabinet, editCabinet, deleteCabinet } from "../controllers/cabinet/cabinetController.js";
+import {
+  getAllCabinets,
+  getCabinet,
+  createCabinet,
+  editCabinet,
+  deleteCabinet,
+  addFavouriteRecipe,
+} from "../controllers/cabinet/cabinetController.js";
 
 // define router
-const router = express.Router()
+const router = express.Router();
 
 // CRUD
 
@@ -18,6 +25,10 @@ router.get("/:id", getCabinet);
 // post new cabinet
 // POST /cabinet/
 router.post("/", createCabinet);
+
+// post new favourite
+// POST /cabinet/favourite/id(cabinetId)
+router.put("/favourite/:id", addFavouriteRecipe);
 
 // edit existing cabinet
 // PUT /cabinet/:id
