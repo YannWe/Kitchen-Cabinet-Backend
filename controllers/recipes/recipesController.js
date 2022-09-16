@@ -17,17 +17,16 @@ export const getFilteredRecipes = async (req, res) => {
 
     const filteredRecipes = data.filter((item) => {
       return (
-        !diet ||
-        (item[diet] &&
-          (!type || item.dishTypes.includes(type)) &&
-          (!intolerance ||
-            item.extendedIngredients.every(
-              (item) => item.name !== intolerance
-            )) &&
-          (!extras ||
-            (extras === "readyInMinutes"
-              ? item.readyInMinutes < 30
-              : item[extras])))
+        (!diet || item[diet]) &&
+        (!type || item.dishTypes.includes(type)) &&
+        (!intolerance ||
+          item.extendedIngredients.every(
+            (item) => item.name !== intolerance
+          )) &&
+        (!extras ||
+          (extras === "readyInMinutes"
+            ? item.readyInMinutes < 30
+            : item[extras]))
       );
     });
 
@@ -45,6 +44,7 @@ export const getFilteredRecipes = async (req, res) => {
 // GET /recipes/id/659604
 export const getRecipeById = async (req, res) => {
   const { id } = req.params;
+  console.log(id);
   try {
     const { data } = await axios.get(
       `https://api.spoonacular.com/recipes/${id}/information?&apiKey=${API_KEY}`
@@ -53,6 +53,7 @@ export const getRecipeById = async (req, res) => {
       return res
         .status(400)
         .json({ message: "error while fetching recipes by id" });
+    console.log(data);
     res.status(200).json(data);
   } catch (error) {
     console.log(error);
