@@ -21,7 +21,9 @@ export const getFilteredRecipes = async (req, res) => {
         (!type || item.dishTypes.includes(type)) &&
         (!intolerance ||
           item.extendedIngredients.every(
-            (item) => item.name !== intolerance
+            (item) =>
+              item.name !== intolerance.toLowerCase() ||
+              item.name !== intolerance.toLowerCase() + "s"
           )) &&
         (!extras ||
           (extras === "readyInMinutes"
