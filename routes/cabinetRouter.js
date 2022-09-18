@@ -7,6 +7,7 @@ import {
   editCabinet,
   deleteCabinet,
   addFavouriteRecipe,
+  addToShoppinglist,
 } from "../controllers/cabinet/cabinetController.js";
 
 // define router
@@ -29,6 +30,10 @@ router.post("/", createCabinet);
 // post new favourite
 // POST /cabinet/favourite/id(cabinetId)
 router.put("/favourite/:id", addFavouriteRecipe);
+
+// post shoppinglist items
+// POST /cabinet/shoppinglist/id(cabinetId)
+router.put("/shoppinglist/:id", addToShoppinglist);
 
 // edit existing cabinet
 // PUT /cabinet/:id

@@ -78,6 +78,7 @@ export const deleteCabinet = async (req, res) => {
   }
 };
 
+//POST /cabinet/favourite/765347663
 export const addFavouriteRecipe = async (req, res) => {
   const { id: _id } = req.params;
   const { recipeId } = req.body;
@@ -86,12 +87,35 @@ export const addFavouriteRecipe = async (req, res) => {
   try {
     const selectedCabinet = await Cabinet.findByIdAndUpdate(
       { _id },
-      { $push: { farouriteRecipes: recipeId } },
+      { $push: { favouriteRecipes: recipeId } },
       { new: true, runValidator: true }
     );
     selectedCabinet &&
       res.status(201).json({
         message: "You sucessfully added one recipe to your favourites",
+      });
+    console.log(selectedCabinet);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+//POST /cabinet/shoppinglist/765347663
+export const addToShoppinglist = async (req, res) => {
+  const { id: _id } = req.params;
+  const { shoppinglist } = req.body;
+  if (!mongoose.Types.ObjectId.isValid(_id))
+    return res.status(404).send("No cabinet with that id");
+  try {
+    const selectedCabinet = await Cabinet.findByIdAndUpdate(
+      { _id },
+      { $push: { shoppinglist: shoppinglist } },
+      { new: true, runValidator: true }
+    );
+    console.log(selectedCabinet);
+    selectedCabinet &&
+      res.status(201).json({
+        message: "You sucessfully added the missing items to your shoppinglist",
       });
   } catch (error) {
     res.status(404).json({ message: error.message });
