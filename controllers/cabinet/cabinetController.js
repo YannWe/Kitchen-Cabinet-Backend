@@ -26,6 +26,18 @@ export const getCabinet = async (req, res) => {
   }
 };
 
+// get specific Cabinet by uid
+// GET /cabinet/uid/:id
+export const getCabinetByUid = async (req, res) => {
+  const uid  = req.params;
+  try {
+    const cabinet = await Cabinet.findOne(uid);
+    res.status(200).json(cabinet);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 // create Cabinet
 // POST /cabinet/
 export const createCabinet = async (req, res) => {

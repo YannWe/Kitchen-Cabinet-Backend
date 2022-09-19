@@ -8,6 +8,7 @@ import {
   deleteCabinet,
   addFavouriteRecipe,
   addToShoppinglist,
+  getCabinetByUid,
 } from "../controllers/cabinet/cabinetController.js";
 
 // define router
@@ -22,6 +23,10 @@ router.get("/", getAllCabinets);
 // get specific cabinet
 // GET /cabinet/:id
 router.get("/:id", getCabinet);
+
+// get specific cabinet
+// GET /cabinet/uid/:uid
+router.get("/uid/:uid", getCabinetByUid);
 
 // post new cabinet
 // POST /cabinet/
