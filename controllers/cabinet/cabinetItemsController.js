@@ -31,7 +31,8 @@ export const getItem = async (req, res) => {
 // add Item to Cabinet
 // POST cabinet/items/
 export const addItem = async (req, res) => {
-  const { cabinetId, id, expiryDate, amount } = req.body;
+  const { CABINET_ID: cabinetId, id, expiryDate, amount } = req.body;
+  
   try {
     // getType from spoonacular
     //
@@ -50,6 +51,7 @@ export const addItem = async (req, res) => {
       image,
     });
     // linking the item to the parent Cabinet
+    console.log(req.body)
     const selectedCabinet = await Cabinet.findByIdAndUpdate(
       { _id: cabinetId },
       { $push: { items: newItem._id } },
