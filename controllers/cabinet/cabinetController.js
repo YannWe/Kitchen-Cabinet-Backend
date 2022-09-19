@@ -29,10 +29,11 @@ export const getCabinet = async (req, res) => {
 // create Cabinet
 // POST /cabinet/
 export const createCabinet = async (req, res) => {
-  const { name } = req.body;
+  const { name, uid } = req.body;
   try {
     const newCabinet = await Cabinet.create({
       name,
+      uid
     });
     res.status(201).json(newCabinet);
   } catch (error) {
