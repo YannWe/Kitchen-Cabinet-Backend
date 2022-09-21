@@ -29,10 +29,11 @@ export const getCabinet = async (req, res) => {
 // get specific Cabinet by uid
 // GET /cabinet/uid/:id
 export const getCabinetByUid = async (req, res) => {
-  const uid  = req.params;
+  const { uid } = req.params;
   try {
-    const cabinet = await Cabinet.findOne(uid);
-    res.status(200).json(cabinet);
+    const cabinet = await Cabinet.findOne({ uid });
+    res.status(200).json(cabinet._id);
+    console.log(req.params)
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
