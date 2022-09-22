@@ -31,7 +31,7 @@ export const getItem = async (req, res) => {
 // add Item to Cabinet
 // POST cabinet/items/
 export const addItem = async (req, res) => {
-  const { CABINET_ID: cabinetId, id, expiryDate, amount } = req.body;
+  const { cabinetId: cabinetId, id, expiryDate, amount } = req.body;
   
   try {
     // getType from spoonacular
