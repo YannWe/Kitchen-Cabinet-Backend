@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 // import Cabinet item model
-import Cabinet from "../../models/cabinet/cabinet.js";
+import Cabinet from '../../models/cabinet/cabinet.js';
 
 //getAllCabinets
 // GET /cabinet/
@@ -60,7 +60,7 @@ export const editCabinet = async (req, res) => {
   const { id: _id } = req.params;
   const cabinet = req.body;
   if (!mongoose.Types.ObjectId.isValid(_id))
-    return res.status(404).send("no cabinet with that id");
+    return res.status(404).send('no cabinet with that id');
   try {
     const updatedCabinet = await Cabinet.findByIdAndUpdate(_id, cabinet, {
       new: true,
@@ -78,7 +78,7 @@ export const editCabinet = async (req, res) => {
 export const deleteCabinet = async (req, res) => {
   const { id: _id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(_id))
-    return res.status(404).send("No cabinet with that id");
+    return res.status(404).send('No cabinet with that id');
   try {
     const deletedCabinet = await Cabinet.findByIdAndRemove(_id, {
       new: true,
@@ -93,11 +93,11 @@ export const deleteCabinet = async (req, res) => {
 };
 
 //POST /cabinet/favourite/765347663
-export const addFavouriteRecipe = async (req, res) => {
+export const addFavoriteRecipe = async (req, res) => {
   const { id: _id } = req.params;
   const { recipeId } = req.body;
   if (!mongoose.Types.ObjectId.isValid(_id))
-    return res.status(404).send("No cabinet with that id");
+    return res.status(404).send('No cabinet with that id');
   try {
     const selectedCabinet = await Cabinet.findByIdAndUpdate(
       { _id },
@@ -106,9 +106,29 @@ export const addFavouriteRecipe = async (req, res) => {
     );
     selectedCabinet &&
       res.status(201).json({
-        message: "You sucessfully added one recipe to your favourites",
+        message: 'You sucessfully added one recipe to your favourites',
       });
     console.log(selectedCabinet);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+//GET /cabinet/favorite/765347663
+export const getFavoriteRecipes = async (req, res) => {
+  const { id: _id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(_id))
+    return res.status(404).send('No cabinet with that id');
+  try {
+    const selectedCabinet = await Cabinet.findById(_id);
+    console.log(selectedCabinet);
+    const favorites = selectedCabinet.favoriteRecipes.join();
+    console.log(favorites);
+    const { data } = await axios.get(
+      `http://localhost:8002/recipes/bulk?ids=${favorites}`
+    );
+
+    res.status(201).json(data);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -119,18 +139,30 @@ export const addToShoppinglist = async (req, res) => {
   const { id: _id } = req.params;
   const { shoppinglist } = req.body;
   if (!mongoose.Types.ObjectId.isValid(_id))
-    return res.status(404).send("No cabinet with that id");
+    return res.status(404).send('No cabinet with that id');
   try {
     const selectedCabinet = await Cabinet.findByIdAndUpdate(
       { _id },
       { $push: { shoppinglist: shoppinglist } },
       { new: true, runValidator: true }
     );
-    console.log(selectedCabinet);
     selectedCabinet &&
       res.status(201).json({
-        message: "You sucessfully added the missing items to your shoppinglist",
+        message: 'You sucessfully added the missing items to your shoppinglist',
       });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+//GET /cabinet/shoppinglist/765347663
+export const getShoppinglist = async (req, res) => {
+  const { id: _id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(_id))
+    return res.status(404).send('No cabinet with that id');
+  try {
+    const selectedCabinet = await Cabinet.findById(_id);
+    selectedCabinet && res.status(201).json(selectedCabinet.shoppinglist);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

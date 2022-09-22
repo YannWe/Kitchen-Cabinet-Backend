@@ -8,7 +8,7 @@ const CabinetSchema = mongoose.Schema(
     name: String,
     uid: String,
     items: [{ type: mongoose.Schema.Types.ObjectId, ref: "CabinetItem" }],
-    favouriteRecipes: [],
+    favoriteRecipes: [],
     shoppinglist: [],
   },
   {
