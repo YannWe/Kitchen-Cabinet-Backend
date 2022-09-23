@@ -17,7 +17,7 @@ const server = express();
 // env variables
 dotenv.config();
 
-server.use(cors({origin: "exp://192.168.1.241:19000"}));
+server.use(cors({origin: "exp://192.168.1.241"}));
 server.use(express.json());
 
 // logging
