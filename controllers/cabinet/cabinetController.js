@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import axios from 'axios';
 // import Cabinet item model
 import Cabinet from '../../models/cabinet/cabinet.js';
 
@@ -7,7 +8,6 @@ import Cabinet from '../../models/cabinet/cabinet.js';
 export const getAllCabinets = async (req, res) => {
   try {
     const allCabinets = await Cabinet.find();
-    // console.log(allItems)
     res.status(200).json(allCabinets);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -33,7 +33,6 @@ export const getCabinetByUid = async (req, res) => {
   try {
     const cabinet = await Cabinet.findOne({ uid });
     res.status(200).json(cabinet._id);
-    console.log(req.params);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -92,7 +91,7 @@ export const deleteCabinet = async (req, res) => {
   }
 };
 
-//POST /cabinet/favourite/765347663
+//POST /cabinet/favorite/765347663
 export const addFavoriteRecipe = async (req, res) => {
   const { id: _id } = req.params;
   const { recipeId } = req.body;
@@ -101,20 +100,19 @@ export const addFavoriteRecipe = async (req, res) => {
   try {
     const selectedCabinet = await Cabinet.findByIdAndUpdate(
       { _id },
-      { $push: { favouriteRecipes: recipeId } },
+      { $push: { favoriteRecipes: recipeId } },
       { new: true, runValidator: true }
     );
     selectedCabinet &&
       res.status(201).json({
         message: 'You sucessfully added one recipe to your favourites',
       });
-    console.log(selectedCabinet);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
 
-//GET /cabinet/favorite/765347663
+//GET /cabinet/favorites/765347663
 export const getFavoriteRecipes = async (req, res) => {
   const { id: _id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(_id))
@@ -122,6 +120,7 @@ export const getFavoriteRecipes = async (req, res) => {
   try {
     const selectedCabinet = await Cabinet.findById(_id);
     const favorites = selectedCabinet.favoriteRecipes.join();
+
     const { data } = await axios.get(
       `http://localhost:8002/recipes/bulk?ids=${favorites}`
     );

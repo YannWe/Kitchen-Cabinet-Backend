@@ -1,5 +1,5 @@
-import axios from "axios";
-import "dotenv/config";
+import axios from 'axios';
+import 'dotenv/config';
 const API_KEY = process.env.API_KEY;
 
 // GET /recipes/filter?type=breakfast&intolerances=dairy&diet=lacto-vegetarian&ids=6543,6543,6543
@@ -13,7 +13,7 @@ export const getFilteredRecipes = async (req, res) => {
     if (!data)
       return res
         .status(400)
-        .json({ message: "error while fetching information bulk" });
+        .json({ message: 'error while fetching information bulk' });
 
     const filteredRecipes = data.filter((item) => {
       return (
@@ -23,10 +23,10 @@ export const getFilteredRecipes = async (req, res) => {
           item.extendedIngredients.every(
             (item) =>
               item.name !== intolerance.toLowerCase() ||
-              item.name !== intolerance.toLowerCase() + "s"
+              item.name !== intolerance.toLowerCase() + 's'
           )) &&
         (!extras ||
-          (extras === "readyInMinutes"
+          (extras === 'readyInMinutes'
             ? item.readyInMinutes < 30
             : item[extras]))
       );
@@ -39,7 +39,7 @@ export const getFilteredRecipes = async (req, res) => {
     console.log(error);
     res
       .status(400)
-      .json({ message: "error while fetching recipes by multi filter" });
+      .json({ message: 'error while fetching recipes by multi filter' });
   }
 };
 
@@ -53,11 +53,11 @@ export const getRecipeById = async (req, res) => {
     if (!data)
       return res
         .status(400)
-        .json({ message: "error while fetching recipes by id" });
+        .json({ message: 'error while fetching recipes by id' });
     res.status(200).json(data);
   } catch (error) {
     console.log(error);
-    res.status(400).json({ message: "error while fetching recipes by id" });
+    res.status(400).json({ message: 'error while fetching recipes by id' });
   }
 };
 
@@ -71,13 +71,13 @@ export const getRecipeByIngredients = async (req, res) => {
     if (!data)
       return res
         .status(400)
-        .json({ message: "error while fetching recipes by ingredients" });
+        .json({ message: 'error while fetching recipes by ingredients' });
     res.status(200).json(data);
   } catch (error) {
     console.log(error);
     res
       .status(400)
-      .json({ message: "error while fetching recipes by ingredients" });
+      .json({ message: 'error while fetching recipes by ingredients' });
   }
 };
 
@@ -93,12 +93,12 @@ export const getIngredients = async (req, res) => {
     if (!data)
       return res
         .status(400)
-        .json({ message: "error while fetching ingredients" });
+        .json({ message: 'error while fetching ingredients' });
 
     res.status(200).json(data.results);
   } catch (error) {
     console.log(error);
-    res.status(400).json({ message: "error while fetching ingredients" });
+    res.status(400).json({ message: 'error while fetching ingredients' });
   }
 };
 
@@ -107,6 +107,7 @@ export const getIngredients = async (req, res) => {
 //GET recipes/bulk?ids=648767,716422
 export const getRecipeInformationBulk = async (req, res) => {
   const { ids } = req.query;
+  console.log('entered');
   try {
     const { data } = await axios.get(
       `https://api.spoonacular.com/recipes/informationBulk?ids=${ids}&apiKey=${API_KEY}`
@@ -114,11 +115,11 @@ export const getRecipeInformationBulk = async (req, res) => {
     if (!data)
       return res
         .status(400)
-        .json({ message: "error while fetching ingredients" });
+        .json({ message: 'error while fetching ingredients' });
     res.status(200).json(data);
   } catch (error) {
     console.log(error);
-    res.status(400).json({ message: "error while fetching ingredients" });
+    res.status(400).json({ message: 'error while fetching ingredients' });
   }
 };
 
@@ -134,7 +135,7 @@ export const getIngredientType = async (req, res) => {
     if (!data)
       return res
         .status(400)
-        .json({ message: "error while fetching ingredients" });
+        .json({ message: 'error while fetching ingredients' });
     res.status(200).json({
       type: data.categoryPath.slice(-1),
       name: data.name,
@@ -142,7 +143,7 @@ export const getIngredientType = async (req, res) => {
       image: data.image,
     });
   } catch (error) {
-    res.status(400).json({ message: "error while fetching ingredients" });
+    res.status(400).json({ message: 'error while fetching ingredients' });
   }
 };
 
@@ -156,11 +157,11 @@ export const getRecipeInstructions = async (req, res) => {
     if (!data)
       return res
         .status(400)
-        .json({ message: "error while fetching instructions" });
+        .json({ message: 'error while fetching instructions' });
 
     res.status(200).json(data);
   } catch (error) {
     console.log(error);
-    res.status(400).json({ message: "error while fetching instructions" });
+    res.status(400).json({ message: 'error while fetching instructions' });
   }
 };
