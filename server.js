@@ -17,7 +17,7 @@ const server = express();
 // env variables
 dotenv.config();
 
-server.use(cors());
+server.use(cors({origin: "exp://192.168.1.241:19000", credentials: true }));
 server.use(express.json());
 
 // logging
@@ -40,6 +40,6 @@ mongoose.connection.on("error", (error) => {
 });
 
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3000
 server.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
 
