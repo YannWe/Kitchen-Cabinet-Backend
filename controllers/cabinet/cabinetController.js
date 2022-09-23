@@ -33,7 +33,7 @@ export const getCabinetByUid = async (req, res) => {
   try {
     const cabinet = await Cabinet.findOne({ uid });
     res.status(200).json(cabinet._id);
-    console.log(req.params)
+    console.log(req.params);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -46,7 +46,7 @@ export const createCabinet = async (req, res) => {
   try {
     const newCabinet = await Cabinet.create({
       name,
-      uid
+      uid,
     });
     res.status(201).json(newCabinet);
   } catch (error) {
@@ -121,9 +121,7 @@ export const getFavoriteRecipes = async (req, res) => {
     return res.status(404).send('No cabinet with that id');
   try {
     const selectedCabinet = await Cabinet.findById(_id);
-    console.log(selectedCabinet);
     const favorites = selectedCabinet.favoriteRecipes.join();
-    console.log(favorites);
     const { data } = await axios.get(
       `http://localhost:8002/recipes/bulk?ids=${favorites}`
     );
@@ -138,12 +136,15 @@ export const getFavoriteRecipes = async (req, res) => {
 export const addToShoppinglist = async (req, res) => {
   const { id: _id } = req.params;
   const { shoppinglist } = req.body;
+  const selectedCabinet = await Cabinet.findById(_id);
+  const cabinetShoppinglist = selectedCabinet.shoppinglist;
+  const updatedShoppinglist = [...cabinetShoppinglist, ...shoppinglist];
   if (!mongoose.Types.ObjectId.isValid(_id))
     return res.status(404).send('No cabinet with that id');
   try {
     const selectedCabinet = await Cabinet.findByIdAndUpdate(
       { _id },
-      { $push: { shoppinglist: shoppinglist } },
+      { shoppinglist: updatedShoppinglist },
       { new: true, runValidator: true }
     );
     selectedCabinet &&
@@ -162,7 +163,38 @@ export const getShoppinglist = async (req, res) => {
     return res.status(404).send('No cabinet with that id');
   try {
     const selectedCabinet = await Cabinet.findById(_id);
-    selectedCabinet && res.status(201).json(selectedCabinet.shoppinglist);
+    const shoppinglist = selectedCabinet.shoppinglist;
+    res.status(201).json(shoppinglist);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+//DELETE /cabinet/shoppinglist/765347663
+export const deleteShoppinglistItems = async (req, res) => {
+  const { toDelete, cabinetId } = req.query;
+  const toDeleteArr = toDelete.split(',').map((item) => Number(item));
+  if (!mongoose.Types.ObjectId.isValid(cabinetId))
+    return res.status(404).send('No cabinet with that id');
+  try {
+    const selectedCabinet = await Cabinet.findById(cabinetId);
+    const shoppinglist = selectedCabinet.shoppinglist;
+    const filteredShoppinglist = shoppinglist.filter(
+      (item) => !toDeleteArr.includes(item.id)
+    );
+    const updatedCabinet = await Cabinet.findOneAndUpdate(
+      { _id: cabinetId },
+      {
+        $set: {
+          shoppinglist: [...filteredShoppinglist],
+        },
+      },
+      { new: true, runValidator: true }
+    );
+    updatedCabinet &&
+      res.status(201).json({
+        message: 'You sucessfully added the missing items to your shoppinglist',
+      });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

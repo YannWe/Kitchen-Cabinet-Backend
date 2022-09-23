@@ -11,6 +11,7 @@ import {
   getCabinetByUid,
   getFavoriteRecipes,
   getShoppinglist,
+  deleteShoppinglistItems,
 } from '../controllers/cabinet/cabinetController.js';
 
 // define router
@@ -49,6 +50,10 @@ router.post('/shoppinglist/:id', addToShoppinglist);
 // get shoppinglist
 // GET /cabinet/shoppinglist/id(cabinetId)
 router.get('/shoppinglist/:id', getShoppinglist);
+
+// delete shoppinglistItems
+// GET /cabinet/shoppinglist/id(cabinetId)
+router.delete('/shoppinglist', deleteShoppinglistItems);
 
 // edit existing cabinet
 // PUT /cabinet/:id
