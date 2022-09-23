@@ -8,7 +8,7 @@ export const getFilteredRecipes = async (req, res) => {
 
   try {
     const { data } = await axios.get(
-      `http://localhost:8002/recipes/bulk?ids=${ids}`
+      `https://ill-pink-lobster-kit.cyclic.app/recipes/bulk?ids=${ids}`
     );
     if (!data)
       return res
