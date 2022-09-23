@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import cors from "cors";
+/* import cors from "cors"; */
 import mongoose from "mongoose";
 
 // helpers
@@ -17,7 +17,7 @@ const server = express();
 // env variables
 dotenv.config();
 
-server.use(cors({origin: "http://192.168.1.241"}));
+/* server.use(cors()); */
 server.use(express.json());
 
 // logging
