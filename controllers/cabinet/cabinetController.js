@@ -105,7 +105,7 @@ export const addFavoriteRecipe = async (req, res) => {
   try {
     const selectedCabinet = await Cabinet.findByIdAndUpdate(
       { _id },
-      { $push: { favoriteRecipes: recipeId } },
+      { $addToSet: { favoriteRecipes: recipeId } },
       { new: true, runValidator: true }
     );
     selectedCabinet &&
