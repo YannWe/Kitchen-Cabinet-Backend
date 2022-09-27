@@ -1,11 +1,11 @@
 import axios from 'axios';
 import 'dotenv/config';
 const API_KEY = process.env.API_KEY;
+import Cabinet from '../../models/cabinet/cabinet.js';
 
 // GET /recipes/filter?type=breakfast&intolerances=dairy&diet=lacto-vegetarian&ids=6543,6543,6543
 export const getFilteredRecipes = async (req, res) => {
   const { type, diet, intolerance, extras, ids } = req.query;
-
   try {
     const { data } = await axios.get(
       `http://localhost:8002/recipes/bulk?ids=${ids}`
@@ -31,7 +31,6 @@ export const getFilteredRecipes = async (req, res) => {
             : item[extras]))
       );
     });
-
     const filteredRecipesIds = filteredRecipes.map((item) => item.id);
 
     res.status(200).json(filteredRecipesIds);
@@ -127,7 +126,6 @@ export const getIngredients = async (req, res) => {
 //GET recipes/bulk?ids=648767,716422
 export const getRecipeInformationBulk = async (req, res) => {
   const { ids } = req.query;
-  console.log('entered');
   try {
     const { data } = await axios.get(
       `https://api.spoonacular.com/recipes/informationBulk?ids=${ids}&apiKey=${API_KEY}`
