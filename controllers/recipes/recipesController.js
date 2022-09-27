@@ -61,18 +61,38 @@ export const getRecipeById = async (req, res) => {
   }
 };
 
-// GET /recipes/byIngredients?ingredients=milk,sugar
+// GET /recipes/byIngredients?cabinetId=6748365&ingredients=milk,sugar
 export const getRecipeByIngredients = async (req, res) => {
-  const { ingredients } = req.query;
+  const { ingredients, cabinetId: _id } = req.query;
+
   try {
     const { data } = await axios.get(
-      `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&ignorePantry=false&apiKey=${API_KEY}`
+      `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&ignorePantry=false&number=10&apiKey=${API_KEY}`
     );
-    if (!data)
-      return res
-        .status(400)
-        .json({ message: 'error while fetching recipes by ingredients' });
-    res.status(200).json(data);
+    const selectedCabinet = await Cabinet.findById(_id);
+    const { intolerance, diet } = selectedCabinet;
+    if (intolerance || diet) {
+      // add preset Filter
+      const recipeIds = data.map((item) => item.id).join(',');
+      const { data: prefilteredRecipesIds } = await axios.get(
+        `http://localhost:8002/recipes/filter?&intolerance=${intolerance}&diet=${diet}&ids=${recipeIds}`
+      );
+      const prefilteredRecipes = data.filter((item) =>
+        prefilteredRecipesIds.includes(item.id)
+      );
+      if (!data)
+        return res
+          .status(400)
+          .json({ message: 'error while fetching recipes by ingredients' });
+
+      return res.status(200).json(prefilteredRecipes);
+    } else {
+      if (!data)
+        return res
+          .status(400)
+          .json({ message: 'error while fetching recipes by ingredients' });
+      return res.status(200).json(data);
+    }
   } catch (error) {
     console.log(error);
     res
