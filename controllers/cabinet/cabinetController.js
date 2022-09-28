@@ -32,7 +32,12 @@ export const getCabinetByUid = async (req, res) => {
   const { uid } = req.params;
   try {
     const cabinet = await Cabinet.findOne({ uid });
-    res.status(200).json(cabinet._id);
+    res.status(200).json({
+      cabinetId: cabinet._id,
+      diet: cabinet.diet,
+      intolerance: cabinet.intolerance,
+    });
+    console.log(cabinet);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -100,7 +105,7 @@ export const addFavoriteRecipe = async (req, res) => {
   try {
     const selectedCabinet = await Cabinet.findByIdAndUpdate(
       { _id },
-      { $push: { favoriteRecipes: recipeId } },
+      { $addToSet: { favoriteRecipes: recipeId } },
       { new: true, runValidator: true }
     );
     selectedCabinet &&
@@ -194,6 +199,45 @@ export const deleteShoppinglistItems = async (req, res) => {
       res.status(201).json({
         message: 'You sucessfully added the missing items to your shoppinglist',
       });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+// POST /cabinet/preferences/id(cabinetId)
+export const postPreferences = async (req, res) => {
+  const { id: _id } = req.params;
+  const { intolerance, diet } = req.body;
+  if (!mongoose.Types.ObjectId.isValid(_id))
+    return res.status(404).send('No cabinet with that id');
+
+  try {
+    const selectedCabinet = await Cabinet.findByIdAndUpdate(
+      { _id },
+      { intolerance: intolerance, diet: diet },
+      { new: true, runValidator: true }
+    );
+    selectedCabinet &&
+      res.status(201).json({
+        message: 'You sucessfully added you preferences to your cabinet',
+      });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+// GET /cabinet/preferences/id(cabinetId)
+export const getPreferences = async (req, res) => {
+  const { id: _id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(_id))
+    return res.status(404).send('No cabinet with that id');
+  try {
+    const selectedCabinet = await Cabinet.findById(_id);
+    const preferences = {
+      diet: selectedCabinet.diet,
+      intolerance: selectedCabinet.intolerance,
+    };
+    res.status(201).json(preferences);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
