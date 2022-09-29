@@ -14,12 +14,12 @@ import {
   deleteShoppinglistItems,
   postPreferences,
   getPreferences,
+  deleteFavoriteRecipe,
 } from '../controllers/cabinet/cabinetController.js';
 
-// define router
 const router = express.Router();
 
-// CRUD
+// CABINET
 
 // get all cabinets
 // GET /cabinet/
@@ -37,34 +37,6 @@ router.get('/uid/:uid', getCabinetByUid);
 // POST /cabinet/
 router.post('/', createCabinet);
 
-// post new favourite
-// POST /cabinet/favourite/id(cabinetId)
-router.post('/favorites/:id', addFavoriteRecipe);
-
-// get favourites
-// GET /cabinet/favourite/id(cabinetId)
-router.get('/favorites/:id', getFavoriteRecipes);
-
-// post shoppinglist items
-// POST /cabinet/shoppinglist/id(cabinetId)
-router.post('/shoppinglist/:id', addToShoppinglist);
-
-// get shoppinglist
-// GET /cabinet/shoppinglist/id(cabinetId)
-router.get('/shoppinglist/:id', getShoppinglist);
-
-// delete shoppinglistItems
-// GET /cabinet/shoppinglist/id(cabinetId)
-router.delete('/shoppinglist', deleteShoppinglistItems);
-
-// add Preferences
-// POST /cabinet/preferences/id(cabinetId)
-router.post('/preferences/:id', postPreferences);
-
-// get Preferences
-// GET /cabinet/preferences/id(cabinetId)
-router.get('/preferences/:id', getPreferences);
-
 // edit existing cabinet
 // PUT /cabinet/:id
 router.put('/:id', editCabinet);
@@ -72,5 +44,35 @@ router.put('/:id', editCabinet);
 // delete specific cabinet
 // DELETE /cabinet/:id
 router.delete('/:id', deleteCabinet);
+
+// FAVORITES
+
+// POST /cabinet/favourite/id(cabinetId)
+router.post('/favorites/:id', addFavoriteRecipe);
+
+// GET /cabinet/favourite/id(cabinetId)
+router.get('/favorites/:id', getFavoriteRecipes);
+
+// DELETE /cabinet/favorites/45435?recipeId=5432
+router.delete('/favorites/:id', deleteFavoriteRecipe);
+
+// POST /cabinet/shoppinglist/id(cabinetId)
+router.post('/shoppinglist/:id', addToShoppinglist);
+
+// SHOPPINGLIST
+
+// GET /cabinet/shoppinglist/id(cabinetId)
+router.get('/shoppinglist/:id', getShoppinglist);
+
+// DELETE /cabinet/shoppinglist/id(cabinetId)
+router.delete('/shoppinglist', deleteShoppinglistItems);
+
+// PREFERENCES
+
+// POST /cabinet/preferences/id(cabinetId)
+router.post('/preferences/:id', postPreferences);
+
+// GET /cabinet/preferences/id(cabinetId)
+router.get('/preferences/:id', getPreferences);
 
 export default router;

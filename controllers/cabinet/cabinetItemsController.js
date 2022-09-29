@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
-import axios from "axios";
-import Cabinet from "../../models/cabinet/cabinet.js";
+import mongoose from 'mongoose';
+import axios from 'axios';
+import Cabinet from '../../models/cabinet/cabinet.js';
 // import Cabinet item model
-import CabinetItem from "../../models/cabinet/cabinetItems.js";
+import CabinetItem from '../../models/cabinet/cabinetItems.js';
 
 //getAllItems from Cabinet
 // GET /cabinet/items/all/:id
@@ -32,7 +32,7 @@ export const getItem = async (req, res) => {
 // POST cabinet/items/
 export const addItem = async (req, res) => {
   const { cabinetId: cabinetId, id, expiryDate, amount } = req.body;
-  
+
   try {
     // getType from spoonacular
     //
@@ -51,7 +51,6 @@ export const addItem = async (req, res) => {
       image,
     });
     // linking the item to the parent Cabinet
-    console.log(req.body)
     const selectedCabinet = await Cabinet.findByIdAndUpdate(
       { _id: cabinetId },
       { $push: { items: newItem._id } },
@@ -69,7 +68,7 @@ export const editItem = async (req, res) => {
   const { id: _id } = req.params;
   const item = req.body;
   if (!mongoose.Types.ObjectId.isValid(_id))
-    return res.status(404).send("no item with that id");
+    return res.status(404).send('no item with that id');
   try {
     const updatedItem = await CabinetItem.findByIdAndUpdate(_id, item, {
       new: true,
@@ -86,7 +85,7 @@ export const editItem = async (req, res) => {
 export const deleteItem = async (req, res) => {
   const { id: _id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(_id))
-    return res.status(404).send("No item with that id");
+    return res.status(404).send('No item with that id');
   try {
     // delete item
     const deletedItem = await CabinetItem.findByIdAndRemove(_id, {

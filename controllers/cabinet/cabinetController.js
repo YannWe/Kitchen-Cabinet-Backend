@@ -37,7 +37,6 @@ export const getCabinetByUid = async (req, res) => {
       diet: cabinet.diet,
       intolerance: cabinet.intolerance,
     });
-    console.log(cabinet);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -70,7 +69,6 @@ export const editCabinet = async (req, res) => {
       new: true,
       runValidator: true,
     });
-    console.log(updatedCabinet);
     res.status(204).json(updatedCabinet);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -136,13 +134,35 @@ export const getFavoriteRecipes = async (req, res) => {
   }
 };
 
+// DELETE /cabinet/favorites/45435?recipeId=5432
+export const deleteFavoriteRecipe = async (req, res) => {
+  const { id: _id } = req.params;
+  const { recipeId } = req.query;
+  const recipeIdNumber = Number(recipeId);
+  if (!mongoose.Types.ObjectId.isValid(_id))
+    return res.status(404).send('No cabinet with that id');
+  try {
+    const deletedFavs = await Cabinet.findByIdAndUpdate(
+      { _id },
+      { $pull: { favoriteRecipes: recipeIdNumber } },
+      { new: true, runValidator: true }
+    );
+    if (deletedFavs)
+      return res.status(201).json({
+        message: 'you successfully removed this recipes from your favorites',
+      });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 //POST /cabinet/shoppinglist/765347663
 export const addToShoppinglist = async (req, res) => {
   const { id: _id } = req.params;
   const { shoppinglist } = req.body;
   const selectedCabinet = await Cabinet.findById(_id);
   const cabinetShoppinglist = selectedCabinet.shoppinglist;
-  const updatedShoppinglist = [...cabinetShoppinglist, ...shoppinglist];
+  const updatedShoppinglist = [...shoppinglist, ...cabinetShoppinglist];
   if (!mongoose.Types.ObjectId.isValid(_id))
     return res.status(404).send('No cabinet with that id');
   try {
