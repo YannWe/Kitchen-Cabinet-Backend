@@ -14,7 +14,6 @@ export const getFilteredRecipes = async (req, res) => {
       return res
         .status(400)
         .json({ message: 'error while fetching information bulk' });
-
     const filteredRecipes = data.filter((item) => {
       return (
         (!diet || item[diet]) &&
@@ -32,7 +31,6 @@ export const getFilteredRecipes = async (req, res) => {
       );
     });
     const filteredRecipesIds = filteredRecipes.map((item) => item.id);
-
     res.status(200).json(filteredRecipesIds);
   } catch (error) {
     console.log(error);
@@ -66,7 +64,7 @@ export const getRecipeByIngredients = async (req, res) => {
 
   try {
     const { data } = await axios.get(
-      `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&ignorePantry=false&number=10&apiKey=${API_KEY}`
+      `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&ignorePantry=false&number=10&ranking=2&apiKey=${API_KEY}`
     );
     const selectedCabinet = await Cabinet.findById(_id);
     const { intolerance, diet } = selectedCabinet;
