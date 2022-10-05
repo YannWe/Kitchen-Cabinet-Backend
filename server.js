@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import cors from "cors";
+/* import cors from "cors"; */
 import mongoose from "mongoose";
 
 // helpers
@@ -17,7 +17,7 @@ const server = express();
 // env variables
 dotenv.config();
 
-server.use(cors());
+/* server.use(cors()); */
 server.use(express.json());
 
 // logging
@@ -39,7 +39,6 @@ mongoose.connection.on("error", (error) => {
     console.log("Connection to MongoDB has failed", error.message);
 });
 
-
-const PORT = process.env.PORT || 8002;
-server.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
+const PORT = process.env.PORT || 3000
+server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 

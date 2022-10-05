@@ -7,6 +7,7 @@ import {
   getRecipeByIngredients,
   getRecipeInstructions,
   getIngredientType,
+  getRecipeInformationBulk,
 } from "../controllers/recipes/recipesController.js";
 
 // define router
@@ -14,9 +15,11 @@ const router = express.Router();
 
 // GET complex filter
 router.get("/filter", getFilteredRecipes);
+//get information for filtering
+router.get("/bulk", getRecipeInformationBulk);
 // GET by id
 router.get("/id/:id", getRecipeById);
-// GET by ingredients (TODO: lax default (exact=true) as query)
+// GET by ingredients
 router.get("/byIngredients", getRecipeByIngredients);
 // GET available ingredient names and ids
 router.get("/ingredient", getIngredients);
