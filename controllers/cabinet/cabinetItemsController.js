@@ -37,7 +37,7 @@ export const addItem = async (req, res) => {
     // getType from spoonacular
     //
     const { data } = await axios.get(
-      `http://localhost:8002/recipes/ingredientType/${id}`
+      `https://ill-pink-lobster-kit.cyclic.app/recipes/ingredientType/${id}`
     );
     const { type, name, image } = data;
     // creating the new item
