@@ -1,6 +1,5 @@
 {
   "scripts": {
-    "dev": "nodemon server.js",
     "start": "node server.js"
   },
   "name": "kitchen-cabinet-backend",
