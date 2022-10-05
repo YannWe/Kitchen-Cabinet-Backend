@@ -72,7 +72,7 @@ export const getRecipeByIngredients = async (req, res) => {
       // add preset Filter
       const recipeIds = data.map((item) => item.id).join(',');
       const { data: prefilteredRecipesIds } = await axios.get(
-        `http://localhost:8002/recipes/filter?&intolerance=${intolerance}&diet=${diet}&ids=${recipeIds}`
+        `https://ill-pink-lobster-kit.cyclic.app/recipes/filter?&intolerance=${intolerance}&diet=${diet}&ids=${recipeIds}`
       );
       const prefilteredRecipes = data.filter((item) =>
         prefilteredRecipesIds.includes(item.id)

@@ -125,7 +125,7 @@ export const getFavoriteRecipes = async (req, res) => {
     const favorites = selectedCabinet.favoriteRecipes.join();
 
     const { data } = await axios.get(
-      `http://localhost:8002/recipes/bulk?ids=${favorites}`
+      `https://ill-pink-lobster-kit.cyclic.app/recipes/bulk?ids=${favorites}`
     );
 
     res.status(201).json(data);
