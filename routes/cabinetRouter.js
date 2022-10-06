@@ -65,7 +65,7 @@ router.post('/shoppinglist/:id', addToShoppinglist);
 router.get('/shoppinglist/:id', getShoppinglist);
 
 // DELETE /cabinet/shoppinglist/id(cabinetId)
-router.delete('/shoppinglist', deleteShoppinglistItems);
+router.delete('/shoppinglist/:id', deleteShoppinglistItems);
 
 // PREFERENCES
 

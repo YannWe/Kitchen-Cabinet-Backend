@@ -196,18 +196,19 @@ export const getShoppinglist = async (req, res) => {
 
 //DELETE /cabinet/shoppinglist/765347663
 export const deleteShoppinglistItems = async (req, res) => {
-  const { toDelete, cabinetId } = req.query;
+  const { id: _id } = req.params;
+  const { toDelete } = req.query;
   const toDeleteArr = toDelete.split(',').map((item) => Number(item));
-  if (!mongoose.Types.ObjectId.isValid(cabinetId))
+  if (!mongoose.Types.ObjectId.isValid(_id))
     return res.status(404).send('No cabinet with that id');
   try {
-    const selectedCabinet = await Cabinet.findById(cabinetId);
+    const selectedCabinet = await Cabinet.findById(_id);
     const shoppinglist = selectedCabinet.shoppinglist;
     const filteredShoppinglist = shoppinglist.filter(
       (item) => !toDeleteArr.includes(item.id)
     );
     const updatedCabinet = await Cabinet.findOneAndUpdate(
-      { _id: cabinetId },
+      { _id },
       {
         $set: {
           shoppinglist: [...filteredShoppinglist],
